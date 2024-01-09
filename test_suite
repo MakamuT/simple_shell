@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo "exit" | ./execmd.c 
+echo "exit" | ./handle_exit.c
+echo "env" | ./handle_env.c
