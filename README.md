@@ -1,6 +1,6 @@
 # Simple-shell
 
-## This is a collaborative project with contributions from ``Thembisile Makamu`` and ``Adora Onyile`` as part of the requirements of the ALX_SWE program.
+### This is a collaborative project with contributions from ``Thembisile Makamu`` and ``Adora Onyile`` as part of the requirements of the ALX_SWE program.
 
 ## General
 ### The ``Simple Shell`` requires creating a basic UNIX command line interpreter in C. The shell allows users to execute basic commands and handles basic functionalities like the UNIX shell ``/bin/sh``.
