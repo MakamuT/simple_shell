@@ -6,7 +6,18 @@
 void handle_env(void)
 {
 	extern char **environ;
-	for (char **env = environ; *env; env++)
-		_putchar(*env);
+	char **env = environ;
+
+	while (*env != NULL)
+	{
+		char *ptr = *env;
+
+		while (*ptr != '\0')
+		{
+			_putchar(*ptr);
+			ptr++;
+		}
+	}
 	_putchar('\n');
+	env++;
 }

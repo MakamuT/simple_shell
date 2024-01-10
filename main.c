@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	size_t n = 0;
 	ssize_t char_read;
 	const char *delim = "\n";
-	int nmu_tok = 0;
+	int num_tok = 0;
 	char *toks;
 	int s;
 
@@ -33,12 +33,12 @@ int main(int argc, char **argv)
 		while (toks != NULL)
 		{
 			num_tok++;
-			*toks = strtok(NULL, delim);
+			toks = strtok(NULL, delim);
 		}
-		tok++;
+		num_tok++;
 
 		argv = malloc(sizeof(char *) * num_tok);
-		*toks = strtok(ptr_cp, delim);
+		toks = strtok(ptr_cp, delim);
 		for (s = 0; toks != NULL; s++)
 		{
 			argv[s] = malloc(sizeof(char) * strlen(toks));
