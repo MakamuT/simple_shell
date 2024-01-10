@@ -8,7 +8,7 @@
 
 int prompt(int argc, char **argv)
 {
-	char *prompt = "simple_shell# ";
+	char *prompt = "simple_shell$ ";
 	char *lineptr;
 	size_t n = 0;
 	(void)argc;
