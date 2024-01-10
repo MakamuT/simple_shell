@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <string.h>
 
+extern char **environ;
+
 int _putchar(char n);
 int prompt(int argc, char **argv);
 void execmd(char **argv);
