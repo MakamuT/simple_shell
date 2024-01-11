@@ -25,11 +25,10 @@ void handle_cd(const char *dir)
 		else
 			return;
 	} else
-		dir_cp = strdup(dir);
-	if (dir_cp == NULL)
 	{
-		perror("strdup() error");
-		return;
+		dir_cp = strdup(dir);
+		if (dir_cp == NULL)
+			perror("strdup() error");
 	}
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 	{
@@ -37,11 +36,15 @@ void handle_cd(const char *dir)
 		free(dir_cp);
 		return;
 	}
-	if (chdir(dir) != 0)
+	if (chdir(dir_cp) != 0)
 	{
 		perror("chdir() error");
 		free(dir_cp);
 		return;
 	}
+	if (setenv("OLDPWD", cwd, 1) != 0)
+		perror("setenv() error");
+	if (setenv("PWD", getcwd(cwd, sizeof(cwd)), 1) != 0)
+		perror("setenv() error");
 	free(dir_cp);
 }

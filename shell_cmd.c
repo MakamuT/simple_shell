@@ -26,6 +26,7 @@ int _strcmp(const char *s1, const char *s2)
 void shell_cmd(char **cmd)
 {
 	char *dir, *cmd_cp;
+	int status;
 
 	cmd_cp = strdup(cmd[0]);
 	if (cmd_cp == NULL)
@@ -40,8 +41,19 @@ void shell_cmd(char **cmd)
 	if (access(cmd[0], X_OK) == 0)
 		file_cmd(cmd[0]);
 	if (_strcmp(cmd[0], "exit") == 0)
-		handle_exit();
+	{
+		status = (cmd[1] != NULL) ? atoi(cmd[1]) : 0;
+		handle_exit(status);
+	}
 	if (_strcmp(cmd[0], "env") == 0)
 		handle_env();
+	if (_strcmp(cmd[0], "setenv") == 0)
+		handle_setenv(cmd);
+	if (_strcmp(cmd[0], "unsetenv") == 0)
+		handle_unsetenv(cmd);
+	if (_strcmp(cmd[0], "ls") == 0)
+		handle_ls(dir);
+	else
+		execmd(cmd);
 	free(cmd_cp);
 }

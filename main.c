@@ -1,8 +1,12 @@
 #include "main.h"
-
+/**
+ * main - entry point of program
+ * @argc: argcument counter
+ * @argv: array of arguments
+ * Return: 0 on success, -1 on error and updates errno
+ */
 int main(int argc, char **argv)
 {
-	char *prompt = "simple_shell# ";
 	char *lineptr = NULL, *ptr_cp = NULL, *toks;
 	size_t n = 0;
 	ssize_t char_read;
@@ -12,7 +16,7 @@ int main(int argc, char **argv)
 	(void)argc;
 	while (1)
 	{
-		printf("%s", prompt);
+		printf("simple_shell# ");
 		char_read = getline(&lineptr, &n, stdin);
 		if (char_read == -1)
 		{
@@ -24,16 +28,13 @@ int main(int argc, char **argv)
 		{
 			perror("tsh: memory allocation error");
 			return (-1);
-		}
-		strcpy(ptr_cp, lineptr);
+		} strcpy(ptr_cp, lineptr);
 		toks = strtok(lineptr, delim);
 		while (toks != NULL)
 		{
 			num_tok++;
 			toks = strtok(NULL, delim);
-		}
-		num_tok++;
-
+		} num_tok++;
 		argv = malloc(sizeof(char *) * num_tok);
 		toks = strtok(ptr_cp, delim);
 		for (s = 0; toks != NULL; s++)
@@ -41,12 +42,9 @@ int main(int argc, char **argv)
 			argv[s] = malloc(sizeof(char) * strlen(toks));
 			strcpy(argv[s], toks);
 			toks = strtok(NULL, delim);
-		}
-		argv[s] = NULL;
+		} argv[s] = NULL;
 		shell_cmd(argv);
-		execmd(argv);
-	}
-	free(ptr_cp);
+	} free(ptr_cp);
 	free(lineptr);
 	return (0);
 }
