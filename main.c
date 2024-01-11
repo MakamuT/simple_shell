@@ -3,16 +3,13 @@
 int main(int argc, char **argv)
 {
 	char *prompt = "simple_shell# ";
-	char *lineptr = NULL, *ptr_cp = NULL;
+	char *lineptr = NULL, *ptr_cp = NULL, *toks;
 	size_t n = 0;
 	ssize_t char_read;
 	const char *delim = "\n";
-	int num_tok = 0;
-	char *toks;
-	int s;
+	int num_tok = 0, s;
 
 	(void)argc;
-
 	while (1)
 	{
 		printf("%s", prompt);
@@ -46,6 +43,7 @@ int main(int argc, char **argv)
 			toks = strtok(NULL, delim);
 		}
 		argv[s] = NULL;
+		shell_cmd(argv);
 		execmd(argv);
 	}
 	free(ptr_cp);

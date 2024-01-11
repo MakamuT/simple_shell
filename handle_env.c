@@ -16,7 +16,7 @@ void handle_env(void)
 			_putchar(*ptr);
 			ptr++;
 		}
+		_putchar('\n');
+		env++;
 	}
-	_putchar('\n');
-	env++;
 }
