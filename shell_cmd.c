@@ -51,8 +51,6 @@ void shell_cmd(char **cmd)
 		handle_setenv(cmd);
 	if (_strcmp(cmd[0], "unsetenv") == 0)
 		handle_unsetenv(cmd);
-	if (_strcmp(cmd[0], "ls") == 0)
-		handle_ls(dir);
 	else
 		execmd(cmd);
 	free(cmd_cp);

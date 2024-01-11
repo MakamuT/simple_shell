@@ -1,5 +1,4 @@
 #include "main.h"
-#include <fcntl.h>
 #define CMD_MAX 100
 /**
  * file_cmd - takes a file as a command line argument
