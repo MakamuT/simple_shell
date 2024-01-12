@@ -5,6 +5,7 @@
  * and it automatically allocates memory for the line
  *
  * @line: ** that stores the memory containing the line
+ * @len: line len
  * @stream: file stream
  * Return: number of characters read\n, -1 on error
  */
