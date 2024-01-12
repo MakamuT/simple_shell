@@ -19,7 +19,7 @@ int prompt(int argc, char **argv)
 		_putchar(*prompt);
 		prompt++;
 	}
-	getline(&lineptr, &n, stdin);
+	_getline(&lineptr, &n, stdin);
 
 	while (*lineptr != '\0')
 	{

@@ -5,18 +5,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-<<<<<<< HEAD
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <string.h>
-=======
 #include <fcntl.h>
->>>>>>> e39923efb09d1203883d5db97b9837c7d04e7b79
 
 extern char **environ;
 int _putchar(char n);
 int prompt(int argc, char **argv);
 int test_main(int argc, char *argv[]);
+ssize_t _getline(char **line, size_t *len, FILE *stream);
 
 /***SHELL***/
 void execmd(char **argv);
