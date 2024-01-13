@@ -61,6 +61,7 @@ char *_strstr(const char *haystack, const char *needle);
 int _strncmp(const char *s1, const char *s2, size_t n);
 
 /***SHELL***/
+int shell_cmd(char **argv);
 void execmd(char *argv);
 void p_pid(void);
 void exec_exit(char *status);

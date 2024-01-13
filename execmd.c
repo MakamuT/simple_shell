@@ -1,7 +1,5 @@
 #include "main.h"
 #define MAX_ARGS 256
-struct Envar envars[MAX_ALIASES];
-int numEnvars = 0;
 /**
  * execmd - executes given commands
  * @argv: char
@@ -10,6 +8,8 @@ int numEnvars = 0;
 void execmd(char *argv)
 {
 	char *token = _strtok(argv, " \t\n"), *varName;
+	struct Envar envars[MAX_ALIASES];
+	int numEnvars = 0;
 	pid_t pid = fork();
 	char *cmd[MAX_ARGS], *varValue;
 	int i;
@@ -40,15 +40,11 @@ void execmd(char *argv)
 		token = _strtok(NULL, " \t\n");
 	}
 	if (pid == -1)
-	{
 		perror("fork");
-		exit(EXIT_FAILURE);
-	}
 	if (pid == 0)
 	{
 		execve(cmd[0], cmd, NULL);
 		perror("Error:");
-		exit(EXIT_FAILURE);
 	} else
 		wait(NULL);
 }
