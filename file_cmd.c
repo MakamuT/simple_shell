@@ -1,5 +1,5 @@
 #include "main.h"
-#define CMD_MAX 100
+#define F_SIZE 1000
 /**
  * file_cmd - takes a file as a command line argument
  * @filename: filename
@@ -8,7 +8,7 @@
 void file_cmd(const char *filename)
 {
 	int fd;
-	char cmd[CMD_MAX];
+	char buff[F_SIZE], *cmd;
 	ssize_t readBytes;
 
 	fd = open(filename, O_RDONLY);
@@ -17,13 +17,16 @@ void file_cmd(const char *filename)
 		perror("Error: Can't open file");
 		exit(EXIT_FAILURE);
 	}
-	while ((readBytes = read(fd, cmd, sizeof(cmd))) > 0)
+	while ((readBytes = read(fd, buff, sizeof(buff))) > 0)
 	{
-		if (write(STDOUT_FILENO, cmd, readBytes) != readBytes)
-		{
-			perror("Error: Can't write command");
-			exit(EXIT_FAILURE);
-		}
+		cmd = parse_cmd(buff);
+		execmd(cmd);
+		free(cmd);
+	}
+	if (readBytes == -1)
+	{
+		perror("Error: Can't write command");
+		exit(EXIT_FAILURE);
 	}
 	close(fd);
 }
