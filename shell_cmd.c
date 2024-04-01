@@ -1,57 +1,70 @@
 #include "main.h"
-#define CMD_MAX 100
 /**
- * _strcmp - compares two strings
- * @s1: first parameter
- * @s2: second parameter
- * Return: returns 0 if s1 == s2
- * -ve value if s1 < s2
- * +ve value if s1 > s2
+ * _strncmp - compares two strings up to n characters
+ * @s1: first string
+ * @s2: second string
+ * @n: maximum number of characters to compare
+ * Return: returns 0 if s1 and s2 are equal up to n characters,
+ * -ve value if s1 < s2, +ve value if s1 > s2
  */
-int _strcmp(const char *s1, const char *s2)
+int _strncmp(const char *s1, const char *s2, size_t n)
 {
-	int i;
+	size_t i;
 
-	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
+	for (i = 0; i < n && s1[i] != '\0' && s2[i] != '\0'; i++)
+	{
 		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
-	return (0);
+			return ((int)(s1[i] - s2[i]));
+	}
+	if (i == n)
+		return (0);
+	return ((int)(s1[i] - s2[i]));
 }
 
 /**
- * shell_cmd - handles simple shell commands
- * @cmd: command to be executed
- * Return: void
+ * shell_cmd - parses through conditions for stdout
+ * @argv: array of arguments
+ * Return: 0 on success, -1 on error and updates errno
  */
-void shell_cmd(char **cmd)
+int shell_cmd(char **argv)
 {
-	char *dir, *cmd_cp;
-	int status;
+	char *char_read = *argv;
 
-	cmd_cp = strdup(cmd[0]);
-	if (cmd_cp == NULL)
-		perror("strdup failed");
-	dir = strtok(cmd_cp, " ");
-	fflush(stdout);
-	if (dir != NULL && _strcmp(cmd[0], "cd") == 0)
+	while (*argv)
 	{
-		dir = strtok(cmd_cp + 3, " ");
-		handle_cd(dir);
-	}
-	if (access(cmd[0], X_OK) == 0)
-		file_cmd(cmd[0]);
-	if (_strcmp(cmd[0], "exit") == 0)
-	{
-		status = (cmd[1] != NULL) ? atoi(cmd[1]) : 0;
-		handle_exit(status);
-	}
-	if (_strcmp(cmd[0], "env") == 0)
-		handle_env();
-	if (_strcmp(cmd[0], "setenv") == 0)
-		handle_setenv(cmd);
-	if (_strcmp(cmd[0], "unsetenv") == 0)
-		handle_unsetenv(cmd);
-	else
-		execmd(cmd);
-	free(cmd_cp);
+		if (argv[1] != NULL)
+		{
+			file_cmd(argv[1]);
+			return (0);
+		}
+		if (char_read != NULL)
+		{
+			if (_strcmp(char_read, "exit") == 0)
+				exec_exit(char_read);
+			else if (_strcmp(char_read, "env") == 0)
+				exec_env();
+			else if (_strcmp(char_read, "getpid") == 0)
+				p_pid();
+			else if (_strncmp(char_read, "setenv", 6) == 0)
+				exec_setenv(char_read);
+			else if (_strncmp(char_read, "unsetenv", 8) == 0)
+				exec_unsetenv(char_read);
+			else if (_strncmp(char_read, "cd", 2) == 0)
+				exec_cd(char_read);
+			else if (_strncmp(char_read, "alias", 5) == 0)
+				exec_alias(char_read);
+			else
+			{
+				int hasScl = (_strchr(char_read, ';') != NULL);
+				int hasAnd = (_strstr(char_read, "&&") != NULL);
+				int hasOr = (_strstr(char_read, "||") != NULL);
+
+				if (hasScl || hasAnd || hasOr)
+					logical_ops(char_read);
+				else
+					execmd(char_read);
+			}
+		} free(char_read);
+		argv++;
+	} return (0);
 }

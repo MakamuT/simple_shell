@@ -1,16 +1,16 @@
 #include "main.h"
 /**
- * handle_env - handles the built-in env command
+ * exec_env - handles the built-in env command
  * Return: void
  */
-void handle_env(void)
+void exec_env(void)
 {
 	char **env = environ;
+	char *ptr;
 
 	while (*env != NULL)
 	{
-		char *ptr = *env;
-
+		ptr = *env;
 		while (*ptr != '\0')
 		{
 			_putchar(*ptr);
