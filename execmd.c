@@ -13,6 +13,7 @@ void execmd(char *argv)
 	pid_t pid = fork();
 	char *cmd[MAX_ARGS], *varValue;
 	int i;
+	int status;
 
 	cmd[0] = parse_cmd(argv);
 	cmd[1] = NULL;
@@ -46,5 +47,5 @@ void execmd(char *argv)
 		execve(cmd[0], cmd, NULL);
 		perror("Error:");
 	} else
-		wait(NULL);
+		waitpid(pid, &status, 0);
 }
